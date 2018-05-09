@@ -22,7 +22,7 @@ CTTriangle::CTTriangle(Point v[3], Point n[3])
 	vertices[3] = A;
 	vertices[9] = B;
 	vertices[15] = C;
-
+	/*
 	vertices[5] = calcPoint(A, (A * 2 + B) / 3, (n[0] + n[1]) / 2);
 	vertices[6] = calcPoint(B, (B * 2 + A) / 3, (n[1] + n[0]) / 2);
 	vertices[11] = calcPoint(B, (B * 2 + C) / 3, (n[1] + n[2]) / 2);
@@ -40,8 +40,24 @@ CTTriangle::CTTriangle(Point v[3], Point n[3])
 	vertices[7] = (vertices[8] + vertices[4] + vertices[10]) / 3;
 	vertices[13] = (vertices[14] + vertices[10] + vertices[16]) / 3;
 	vertices[0] = (vertices[1] + vertices[7] + vertices[13]) / 3;
+	*/
+	vertices[5] = calcPoint(A, (A * 2 + B) / 3, n[0]);
+	vertices[6] = calcPoint(B, (B * 2 + A) / 3, n[1]);
+	vertices[11] = calcPoint(B, (B * 2 + C) / 3, n[1]);
+	vertices[12] = calcPoint(C, (C * 2 + B) / 3, n[2]);
+	vertices[17] = calcPoint(C, (C * 2 + A) / 3, n[2]);
+	vertices[18] = calcPoint(A, (A * 2 + C) / 3, n[0]);
 
-
+	vertices[2] = calcPoint(A, (A * 2 + weightPoint) / 3, n[0]);// n[0];
+	vertices[4] = calcPoint((A + B) / 2, (A + B + weightPoint) / 3, (n[0] + n[1]) / 2);
+	vertices[8] = calcPoint(B, (B * 2 + weightPoint) / 3, n[1]);// n[1];
+	vertices[10] = calcPoint((B + C) / 2, (B + C + weightPoint) / 3, (n[1] + n[2]) / 2);
+	vertices[14] = calcPoint(C, (C * 2 + weightPoint) / 3, n[2]);// n[2];
+	vertices[16] = calcPoint((C + A) / 2, (C + A + weightPoint) / 3, (n[2] + n[0]) / 2);
+	vertices[1] = (vertices[2] + vertices[4] + vertices[16]) / 3;
+	vertices[7] = (vertices[8] + vertices[4] + vertices[10]) / 3;
+	vertices[13] = (vertices[14] + vertices[10] + vertices[16]) / 3;
+	vertices[0] = (vertices[1] + vertices[7] + vertices[13]) / 3;
 }
 
 
@@ -62,5 +78,6 @@ Mesh CTTriangle::evalMesh() const {
 		vertices[2], vertices[16], vertices[14],
 		vertices[1], vertices[13],
 		vertices[0] });
-	return ba.evalMesh(5) + cb.evalMesh(5) + ac.evalMesh(5);
+
+	return ba.evalMesh(30) + cb.evalMesh(30) + ac.evalMesh(30);
 }

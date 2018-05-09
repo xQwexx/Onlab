@@ -9,10 +9,30 @@ CloughTocher::CloughTocher()
 	//igl::readOFF("B:/MyPrograms/VisualStudio/BME/ModelViewerApp/ModelViewerApp/bunny.off", V, F);
 	
 	igl::per_vertex_normals(V, F, N);
-	calcModel();
+	//calcModel();
 	// Plot the mesh
+	/*
 	igl::opengl::glfw::Viewer viewer;
 	viewer.data().set_mesh(calcV, calcF);
+	viewer.launch();*/
+	size_t scale = 50;
+	Eigen::MatrixXd calcVRBS(scale*scale + (scale+1)*(scale+1), 3);
+	Eigen::MatrixXi calcFRBS(scale*scale *4, 3);
+	calcFRBS.fill(0);
+	size_t vertexIndex = 0;
+	size_t faceIndex = 0;
+
+	RBF mod(V, F);
+	mod.interp({ 2, 1 });
+	Mesh m = mod.interpol(20, scale);
+	for (const auto &p : m.points)
+		calcVRBS.row(vertexIndex++) << p[0], p[1], p[2];
+	for (const auto &t : m.triangles)
+		calcFRBS.row(faceIndex++) << t[0], t[1], t[2];
+	//std::cout << calcFRBS;
+	//std::cout << calcVRBS;
+	igl::opengl::glfw::Viewer viewer;
+	viewer.data().set_mesh(calcVRBS, calcFRBS);
 	viewer.launch();
 }
 
@@ -133,6 +153,12 @@ void CloughTocher::calcModel() {
 		calcV.row(vertexIndex++) << p[0], p[1], p[2];
 	for (const auto &t : mesh.triangles)
 		calcF.row(faceIndex++) << t[0], t[1], t[2];
+
+	std::ofstream f("test.obj");
+	for (const auto &p : mesh.points)
+		f << "v " << p[0] << ' ' << p[1] << ' ' << p[2] << std::endl;
+	for (const auto &t : mesh.triangles)
+		f << "f " << t[0] + 1 << ' ' << t[1] + 1 << ' ' << t[2] + 1 << std::endl;
 	//std::cout << calcF;
 	//std::cout << calcV;
 

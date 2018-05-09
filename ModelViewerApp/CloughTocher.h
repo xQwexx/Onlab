@@ -5,6 +5,7 @@
 
 #include "btriangle.hh"
 #include "CTTriangle.h"
+#include "RBF.h"
 #include <list>
 #include <Eigen/Dense>
 #include <igl/readOFF.h>
@@ -26,10 +27,10 @@ private:
 
 	//unsigned tempPoint[];
 
-	unsigned searchPointIndex(unsigned parent1, unsigned parent2, unsigned index);
-	Eigen::VectorXf calcPoint(unsigned pointIndex, Eigen::MatrixXd calcPoint);
-	Eigen::VectorXf calcPoint(unsigned pointIndex, Eigen::MatrixXd calcPoint, Eigen::VectorXd normal);
-	Eigen::VectorXf calcPoint(Eigen::VectorXd point, Eigen::VectorXd calcPoint, Eigen::VectorXd normal);
+	//unsigned searchPointIndex(unsigned parent1, unsigned parent2, unsigned index);
+	//Eigen::VectorXf calcPoint(unsigned pointIndex, Eigen::MatrixXd calcPoint);
+	//Eigen::VectorXf calcPoint(unsigned pointIndex, Eigen::MatrixXd calcPoint, Eigen::VectorXd normal);
+	//Eigen::VectorXf calcPoint(Eigen::VectorXd point, Eigen::VectorXd calcPoint, Eigen::VectorXd normal);
 	//listOfInts.push_back(1);
 public:
 	CloughTocher();
