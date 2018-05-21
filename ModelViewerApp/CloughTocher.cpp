@@ -29,6 +29,12 @@ CloughTocher::CloughTocher()
 		calcVRBS.row(vertexIndex++) << p[0], p[1], p[2];
 	for (const auto &t : m.triangles)
 		calcFRBS.row(faceIndex++) << t[0], t[1], t[2];
+
+	std::ofstream f("test.obj");
+	for (const auto &p : m.points)
+		f << "v " << p[0] << ' ' << p[1] << ' ' << p[2] << std::endl;
+	for (const auto &t : m.triangles)
+		f << "f " << t[0] + 1 << ' ' << t[1] + 1 << ' ' << t[2] + 1 << std::endl;
 	//std::cout << calcFRBS;
 	//std::cout << calcVRBS;
 	igl::opengl::glfw::Viewer viewer;

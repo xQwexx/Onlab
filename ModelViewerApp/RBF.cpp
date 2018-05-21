@@ -44,7 +44,7 @@ double RBF::interp(Eigen::VectorXd p)
 	double z = 0;
 	for (size_t i = 0; i < n; i++)
 	{
-		z += a[i] * calcR(p, V.row(i));
+		z += a[i] * fi(calcR(p, V.row(i)));
 	}
 	return z;
 }
